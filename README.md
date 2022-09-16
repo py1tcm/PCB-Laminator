@@ -8,6 +8,8 @@
  The fuser's thermistor itself and the fuser lamp drive circuit were used, the power supply board was cut to remove the part of the high voltage generation that is not needed and a step down was added for the atmega328's 5Vdc power supply.
 
  Photos and videos in the images folder.
+ 
+ **Portuguese
 
  Laminador para fabricação de PCB
  
