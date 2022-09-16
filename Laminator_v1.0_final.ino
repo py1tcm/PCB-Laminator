@@ -11,14 +11,8 @@
 //Motor control
 int pwmPin = 9;    // Pwm out
 int enaPin = 10;   // Enable motor at low level
-//int lckPin = 11; // Speed lock pin signal from motor (low)
-//int rpmPin = 12; // Singal from motor to rpm calc
 int Hz = 0;        // variable for Freq pwm motor control
 //End motor
-
-//Serial
-//int val = 0;     // serial read info variable
-//End Serial
 
 //Temp control
 #define RT0 230000             // Ω  valor do NTC a 25º
@@ -81,13 +75,11 @@ void setup() {
   pinMode(pwmPin, OUTPUT);
   pinMode(enaPin, OUTPUT);
   digitalWrite(enaPin, HIGH); // Avoid random motor enable
-//  pinMode(lckPin, INPUT);
-//  pinMode(rpmPin, INPUT);
 //End motor
 
 //Serial
   Serial.begin(9600);  // ATTENTION >> don´t remove this line, prevent sketchs update issues 
-  Serial.println("Laminador Versao 1.0 by PY1TCM - 01/09/2022");
+  Serial.println("Laminator Version 1.0 by PY1TCM - 01/09/2022");
 //End serial
 
 //Temp
@@ -105,7 +97,7 @@ void setup() {
   lcd.setCursor(5, 0);
   lcd.print("PY1TCM");
   lcd.setCursor(1, 1);
-  lcd.print("Laminador V1.0");
+  lcd.print("Laminator V1.0");
   delay(2000);
   lcd.clear();
   lcd.createChar(0, grau);     // Create celsius simbol
@@ -125,16 +117,6 @@ void setup() {
 }
 
 void loop() {
-/*
-//serial enable
-  if (Serial.available()){
-  val = Serial.read();
-  }
-//End serial
-*/
-//  Control_serial();
-
-//  fan_test();
 
   Temp();
 
@@ -168,10 +150,6 @@ void Temp() {
   // LCD temp update
   if (timeCur - timeLcd >= timeUpdate) {
     timeLcd = timeCur;
-/*    Serial.print("Temperatura:");
-    Serial.print("\t");
-    Serial.print(TX);
-    Serial.println("C\t\t"); */
     lcd.setCursor(0, 1);
     lcd.print("       ");
     lcd.setCursor(0, 1);
@@ -222,9 +200,6 @@ void Button_control() {
       digitalWrite(enaPin, LOW);
       digitalWrite(redledPin, LOW);
       digitalWrite(greenledPin, HIGH);
-/*      Serial.print(Hz);
-      Serial.println("Hz");
-      Serial.println("Fan 160"); */
       lcd.setCursor(0, 0);
       lcd.print("38 Rpm");
       lcd.setCursor(8, 0);
@@ -239,9 +214,6 @@ void Button_control() {
       digitalWrite(enaPin, LOW);
       digitalWrite(redledPin, HIGH);
       digitalWrite(greenledPin, LOW);
-/*      Serial.print(Hz);
-      Serial.println("Hz");
-      Serial.println("Fan 96"); */
       lcd.setCursor(0, 0);
       lcd.print("13 Rpm");
       lcd.setCursor(8, 0);
@@ -259,9 +231,6 @@ void Button_control() {
       digitalWrite(enaPin, LOW);
       digitalWrite(redledPin, LOW);
       digitalWrite(greenledPin, HIGH);
-/*      Serial.print(Hz);
-      Serial.println("Hz");
-      Serial.println("Fan 255"); */
       lcd.setCursor(0, 0);
       lcd.print("56 Rpm");
       lcd.setCursor(8, 0);
@@ -276,8 +245,6 @@ void Button_control() {
       digitalWrite(enaPin, HIGH);
       digitalWrite(redledPin, HIGH);
       digitalWrite(greenledPin, HIGH);
-//      Serial.println("motor Desligado");
-//      Serial.println("Fan 192");
       lcd.setCursor(0, 0);
       lcd.print(" 0 Rpm");
       lcd.setCursor(8, 0);
@@ -292,8 +259,6 @@ void Button_control() {
       digitalWrite(enaPin, HIGH);
       digitalWrite(redledPin, HIGH);
       digitalWrite(greenledPin, HIGH);
-//      Serial.println("motor Desligado");
-//      Serial.println("Fan Desligado");
       lcd.setCursor(0, 0);
       lcd.print(" 0 Rpm");
       lcd.setCursor(8, 0);
@@ -303,99 +268,3 @@ void Button_control() {
     }
   }
 }
-/*
-void Control_serial() {
-  if (val == '0'){  //Parar o motor
-    Hz = 0;
-    PWMgen();
-    digitalWrite(enaPin, HIGH);
-//    analogWrite(lamPwm, LOW);
-    Serial.println("motor Desligado");
-    lcd.setCursor(0, 0);
-    lcd.print("Fusor 0 RPM ");
-    lcd.setCursor(8, 1);
-    lcd.print("Lamp off");
-  }
-  if (val == '1'){  //280Hz
-    Hz = 200;
-    PWMgen();
-    digitalWrite(enaPin, LOW);
-    Serial.print(Hz);
-    Serial.println("Hz");
-    lcd.setCursor(0, 0);
-    lcd.print("Fusor 13 RPM");
-  }
-  if (val == '2'){  //560Hz
-    Hz = 560;
-    PWMgen();
-    digitalWrite(enaPin, LOW);
-    Serial.println("560Hz");
-    lcd.setCursor(0, 0);
-    lcd.print("Fusor 38 RPM");
-  }
-  if (val == '3'){  // 840Hz
-    Hz = 840;
-    PWMgen();
-    digitalWrite(enaPin, LOW);
-    Serial.println("840Hz");
-    lcd.setCursor(0, 0);
-    lcd.print("Fusor 56 RPM");
-  }
-    if (val == '8'){
-//    analogWrite(lamPwm, HIGH);
-    set_temperature = 100;  //Seta a temperatura de trabalho
-    Pid();
-    Serial.println("fusor ligado");
-    lcd.setCursor(8, 1);
-    lcd.print("Lamp on ");
-  }
-  if (val == '9'){
-//    analogWrite(lamPwm, LOW);
-    set_temperature = 0;  //Seta a temperatura de trabalho
-    Pid();
-    Serial.println("fusor desligado");
-    lcd.setCursor(8, 1);
-    lcd.print("Lamp off");
-  }
-}
-*/
-/*
-void fan_test() {
-  if (val == '1'){  //Parar o motor
-    analogWrite(fanPin, 32);
-    Serial.println("Fan PWM 32");
-  }
-  if (val == '2'){  //Parar o motor
-    analogWrite(fanPin, 64);
-    Serial.println("Fan PWM 64");
-  }
-    if (val == '3'){  //Parar o motor
-    analogWrite(fanPin, 96);
-    Serial.println("Fan PWM 96");
-  }
-    if (val == '4'){  //Parar o motor
-    analogWrite(fanPin, 128);
-    Serial.println("Fan PWM 128");
-  }
-   if (val == '5'){  //Parar o motor
-    analogWrite(fanPin, 160);
-    Serial.println("Fan PWM 160");
-  }
-   if (val == '6'){  //Parar o motor
-    analogWrite(fanPin, 192);
-    Serial.println("Fan PWM 192");
-  }
-   if (val == '7'){  //Parar o motor
-    analogWrite(fanPin, 224);
-    Serial.println("Fan PWM 224");
-  }
-   if (val == '8'){  //Parar o motor
-    analogWrite(fanPin, 255);
-    Serial.println("Fan PWM 255");
-  }
-    if (val == '0'){  //Parar o motor
-    analogWrite(fanPin, 0);
-    Serial.println("Fan PWM 0");
-  }
-}
-*/
