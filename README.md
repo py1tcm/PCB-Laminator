@@ -9,7 +9,7 @@
 
  Photos and videos in the images folder.
  
- **Portuguese
+ **Portuguese**
 
  Laminador para fabricação de PCB
  
